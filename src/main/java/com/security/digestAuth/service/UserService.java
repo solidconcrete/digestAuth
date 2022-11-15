@@ -63,16 +63,18 @@ public class UserService implements UserDetailsService {
 	}
 
 	public void resetPassword(String body) {
-		DigestUser userToUpdate = getLoggedInUser();
 		String resetCode;
 		String newPassword;
+		String username;
 		try {
 			JSONObject object = (JSONObject) parser.parse(body);
 			newPassword = object.get("new-password").toString();
 			resetCode = object.get("reset-code").toString();
+			username = object.get("username").toString();
 		} catch (ParseException exception) {
 			throw new RuntimeException();
 		}
+		DigestUser userToUpdate = userRepo.findByUsername(username);
 		if (!resetCode.equals(userToUpdate.getPassResetCode())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong password reset code!");
 		}

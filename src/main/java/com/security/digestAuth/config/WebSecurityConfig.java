@@ -65,21 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// http.exceptionHandling()
-		// 		.authenticationEntryPoint(digestEntryPoint())
-		// 		.and()
-		// 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		// 		.and()
-		// 		.authorizeRequests()
-		// 		// .and()
-		// 		.antMatchers("h2/**").permitAll()
-		//
-		// 		.antMatchers("/register-account/").permitAll()
-		// 		.anyRequest().fullyAuthenticated()
-		// 		.and()
-		// 		.addFilterAfter(digestFilter(), BasicAuthenticationFilter.class)
-		// 		.csrf().disable();
-
 		http.exceptionHandling()
 				.authenticationEntryPoint(digestEntryPoint())
 				.and()
@@ -88,6 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/h2/**").permitAll()
 				.antMatchers("/register-account").permitAll()
+				.antMatchers("/reset-password").permitAll()
 				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				.anyRequest().fullyAuthenticated()
 				.and()
